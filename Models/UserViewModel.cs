@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,19 +7,18 @@ using System.Threading.Tasks;
 
 namespace app.Models
 {
-    public class Tbl_User
+    public class UserViewModel
     {
-        [Key]
         public int UserID { get; set; }
-        [Column(TypeName = "nvarchar(50)")]
+        [Required]
         public string Name { get; set; }
-        [Column(TypeName = "nvarchar(100)")]
+        [Required]
         public string Email { get; set; }
-        [Column(TypeName = "nvarchar(50)")]
+        [Required]
         public string Password { get; set; }
-        [Column(TypeName = "varchar(20)")]
+        [Required]
         public string NIC { get; set; }
-        [Column(TypeName = "nvarchar(200)")]
+        [Required]
         public string Address { get; set; }
     }
 }

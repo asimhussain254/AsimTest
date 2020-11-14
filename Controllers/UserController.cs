@@ -83,17 +83,22 @@ namespace app.Controllers
 
         // POST: api/User
         [HttpPost]
-        public async Task<IActionResult> PostTbl_User([FromBody] Tbl_User tbl_User)
+        public async Task<IActionResult> PostTbl_User(UserViewModel user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            _context.Tbl_User.Add(tbl_User);
+            Tbl_User userdata = new Tbl_User();
+            userdata.Name = user.Name;
+            userdata.Email = user.Email;
+            userdata.Password=user.Password;
+            userdata.NIC = user.NIC;
+            userdata.Address=user.Address;
+            _context.Tbl_User.Add(userdata);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTbl_User", new { id = tbl_User.UserID }, tbl_User);
+            return CreatedAtAction("GetTbl_User", new { id = userdata.UserID }, userdata);
         }
 
         // DELETE: api/User/5
