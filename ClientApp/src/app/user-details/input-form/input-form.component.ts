@@ -10,32 +10,31 @@ import { Userdeatil } from '../../shared/userdeatil.model';
 })
 export class InputFormComponent implements OnInit {
 
-  constructor(private service:UserdeatilServiceService) { }
+  constructor(private service: UserdeatilServiceService) { }
 
   ngOnInit() {
     this.resetForm();
   }
-  resetForm(form?:NgForm){
-    if(form != null)
+  resetForm(form?: NgForm) {
+    if (form != null)
       form.resetForm();
     this.service.formData = {
-      UserID : 0,
-      Name:'',
-      Email:'',
-      Password:'',
-      NIC : '',
-      Address:''
+      UserID: 0,
+      Name: '',
+      Email: '',
+      Password: '',
+      NIC: '',
+      Address: ''
     }
   }
-  onSubmit(form:NgForm){
-    this.service.postUserDetail(form.value).subscribe
-     {
+  onSubmit(form: NgForm) {
+    this.service.postUserDetail(form.value).subscribe(
       res => {
         this.resetForm(form);
-      }
+      },
       err => {
         console.log(err);
       }
-    }
+    )
   }
 }
