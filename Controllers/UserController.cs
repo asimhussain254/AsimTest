@@ -48,19 +48,26 @@ namespace app.Controllers
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTbl_User([FromRoute] int id, [FromBody] Tbl_User tbl_User)
+        public async Task<IActionResult> PutTbl_User([FromRoute] int id, [FromBody] UserViewModel userVm)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            var user = _context.Tbl_User.Find(id);
 
-            if (id != tbl_User.UserID)
+            if (user == null)
             {
-                return BadRequest();
+                return BadRequest("User does not exist");
             }
 
-            _context.Entry(tbl_User).State = EntityState.Modified;
+            user.Name = userVm.Name;
+            user.Email = userVm.Email;
+            user.Password = userVm.Password;
+            user.NIC = userVm.NIC;
+            user.Address = userVm.Address;
+
+            _context.Entry(user).State = EntityState.Modified;
 
             try
             {
@@ -83,7 +90,7 @@ namespace app.Controllers
 
         // POST: api/User
         [HttpPost]
-        public async Task<IActionResult> PostTbl_User(UserViewModel user)
+        public async Task<IActionResult> PostTbl_User([FromBody] UserViewModel user)
         {
             if (!ModelState.IsValid)
             {
@@ -92,9 +99,9 @@ namespace app.Controllers
             Tbl_User userdata = new Tbl_User();
             userdata.Name = user.Name;
             userdata.Email = user.Email;
-            userdata.Password=user.Password;
+            userdata.Password = user.Password;
             userdata.NIC = user.NIC;
-            userdata.Address=user.Address;
+            userdata.Address = user.Address;
             _context.Tbl_User.Add(userdata);
             await _context.SaveChangesAsync();
 

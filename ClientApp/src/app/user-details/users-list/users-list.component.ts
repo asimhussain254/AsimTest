@@ -1,20 +1,27 @@
-import { Userdeatil } from './../../shared/userdeatil.model';
-import { UserdeatilServiceService } from './../../shared/userdeatil-service.service';
 import { Component, OnInit } from '@angular/core';
+
+import { IUser } from '../user.model';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
-  styleUrls: ['./users-list.component.css']
+  styleUrls: ['./users-list.component.css'],
 })
 export class UsersListComponent implements OnInit {
-
-  constructor(private service: UserdeatilServiceService) { }
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
-    this.service.displayUserList();
+    this.userService.getUsers();
   }
-  getUser(data: Userdeatil) {
-    this.service.formData = {...data};
+
+  get users() {
+    return this.userService.userList;
   }
+
+  setUser(data: IUser) {
+    this.userService.selectedUser = { ...data };
+  }
+
+  deleteUser(user: IUser) {}
 }

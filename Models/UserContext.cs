@@ -13,6 +13,5 @@ namespace app.Models
 
         }
         public DbSet<Tbl_User> Tbl_User { get; set; }
-
     }
 }

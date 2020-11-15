@@ -9,7 +9,7 @@ namespace app.Models
 {
     public class UserViewModel
     {
-        public int UserID { get; set; }
+        public int? UserID { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]

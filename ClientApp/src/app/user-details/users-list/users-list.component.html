@@ -1,16 +1,22 @@
-<table class="table table-hover">
-    <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>CNIC</th>
-        <th>Address</th>
-        <th>Actions</th>
-    </tr>
-    <tr *ngFor="let result of service.userList">
-        <td (click)="getUser(result)">{{result.Name}}</td>
-        <td (click)="getUser(result)">{{result.Email}}</td>
-        <td (click)="getUser(result)">{{result.NIC}}</td>
-        <td (click)="getUser(result)">{{result.Address}}</td>
-        <td></td>
-    </tr>
+<table class="table">
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>CNIC</th>
+    <th>Address</th>
+    <th>Actions</th>
+  </tr>
+  <tr *ngFor="let user of users">
+    <td>{{ user.Name }}</td>
+    <td>{{ user.Email }}</td>
+    <td>{{ user.NIC }}</td>
+    <td>{{ user.Address }}</td>
+    <td>
+      <button class="btn btn-danger" (click)="deleteUser(user)">Delete</button>
+      <button class="btn btn-primary" (click)="setUser(user)">
+        <i class="fas fa-pencil"></i>
+        Edit
+      </button>
+    </td>
+  </tr>
 </table>

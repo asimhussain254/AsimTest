@@ -1,65 +1,56 @@
-import { Userdeatil } from './../../shared/userdeatil.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { UserdeatilServiceService } from '../../shared/userdeatil-service.service';
-import { Userdeatil } from '../../shared/userdeatil.model';
+
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-input-form',
   templateUrl: './input-form.component.html',
-  styleUrls: ['./input-form.component.css']
+  styleUrls: ['./input-form.component.css'],
 })
 export class InputFormComponent implements OnInit {
+  @ViewChild('form') userForm: NgForm;
 
-  constructor(private service: UserdeatilServiceService) { }
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
     this.resetForm();
   }
-  resetForm(form?: NgForm) {
-    if (form != null)
-      form.resetForm();
-    this.service.formData = {
+
+  get userData() {
+    return this.userService.selectedUser;
+  }
+
+  onSubmit() {
+    // Destructure value and valid properties from form object
+    const { value, valid } = this.userForm;
+    if (valid) {
+      const isNew = this.userService.selectedUser.UserID === 0;
+      const subscription = isNew
+        ? this.userService.createUser(value)
+        : this.userService.updateUser(this.userService.selectedUser.UserID, { ...value, UserID: null });
+
+      subscription.subscribe(
+        (res) => {
+          this.resetForm();
+          this.userService.getUsers();
+        },
+        (err) => {
+          console.log(err);
+        },
+      );
+    }
+  }
+
+  private resetForm() {
+    this.userForm.reset();
+    this.userService.selectedUser = {
       UserID: 0,
       Name: '',
       Email: '',
       Password: '',
       NIC: '',
-      Address: ''
-    }
-  }
-  onSubmit(form: NgForm) {
-    const { value,valid } = form;
-    const isNew =this.service.formData.UserID === 0;
-    if (valid) {
-      if (isNew) {
-        this.insertUser(value);
-      }
-      else {
-        value.UserID=this.service.formData.UserID;
-        this.updateUser(value);
-      }
-    }
-
-  }
-  insertUser(value: NgForm) {
-    this.service.postUserDetail(value.value).subscribe(
-      res => {
-        this.resetForm(value);
-      },
-      err => {
-        console.log(err);
-      }
-    )
-  }
-  updateUser(form: NgForm) {
-    this.service.putUserDetail(form.value).subscribe(
-      res => {
-        this.resetForm(form);
-      },
-      err => {
-        console.log(err);
-      }
-    )
+      Address: '',
+    };
   }
 }
