@@ -1,3 +1,5 @@
+import { Userdeatil } from './../../shared/userdeatil.model';
+import { UserdeatilServiceService } from './../../shared/userdeatil-service.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service: UserdeatilServiceService) { }
 
   ngOnInit() {
+    this.service.displayUserList();
   }
-
+  getUser(data: Userdeatil) {
+    this.service.formData = {...data};
+  }
 }

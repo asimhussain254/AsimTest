@@ -1,3 +1,16 @@
-<div>
-    <p>Asim Hussain</p>
-</div>
+<table class="table table-hover">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>CNIC</th>
+        <th>Address</th>
+        <th>Actions</th>
+    </tr>
+    <tr *ngFor="let result of service.userList">
+        <td (click)="getUser(result)">{{result.Name}}</td>
+        <td (click)="getUser(result)">{{result.Email}}</td>
+        <td (click)="getUser(result)">{{result.NIC}}</td>
+        <td (click)="getUser(result)">{{result.Address}}</td>
+        <td></td>
+    </tr>
+</table>
