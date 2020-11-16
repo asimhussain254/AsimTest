@@ -1,19 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, TemplateRef } from '@angular/core';
 
-export class Message {
-  content: string;
-  style: string;
-  dismissed: boolean = false;
-  constructor(content, style) {
-    this.content = content;
-    this.style = style || 'info';
-  }
-}
 @Injectable()
 export class ToastService {
+  toasts: any[] = [];
 
-  constructor() { }
-  getMessage( ){
-    
+  show(textOrTpl: string | TemplateRef<any>, options: any = {}) {
+    this.toasts.push({ textOrTpl, ...options });
+  }
+
+  remove(toast) {
+    this.toasts = this.toasts.filter(t => t !== toast);
   }
 }
