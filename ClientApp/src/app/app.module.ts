@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { UserModule } from './user-details/user.module';
@@ -20,7 +19,6 @@ import { UserModule } from './user-details/user.module';
     UserModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    NgbModule 
   ],
   bootstrap: [AppComponent],
 })

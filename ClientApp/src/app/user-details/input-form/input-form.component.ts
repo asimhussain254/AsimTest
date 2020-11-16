@@ -13,7 +13,7 @@ import { ToastService } from './../../toast.service';
 export class InputFormComponent implements OnInit {
   @ViewChild('form') userForm: NgForm;
 
-  constructor(private userService: UserService, private toastService: ToastService) { }
+  constructor(private userService: UserService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.resetForm();
@@ -40,18 +40,14 @@ export class InputFormComponent implements OnInit {
         (res) => {
           this.resetForm();
           this.userService.getUsers();
-          // this.toastr.success(`Record is updated.`,"Success")
+          this.toastr.success(`Record is updated.`,"Success")
         },
         (err) => {
           console.log(err);
-          this.toastService.show('I am a success toast', { classname: 'bg-success text-light', delay: 10000 });
-          // this.toastr.error("There is error occured.","Error");
+          
         },
       );
     }
-  }
-  showSuccess() {
-    this.toastService.show('I am a success toast', { classname: 'bg-success text-light', delay: 10000 });
   }
   private resetForm() {
     this.userForm.reset();
