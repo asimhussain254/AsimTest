@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 import { UserService } from '../user.service';
 
@@ -11,7 +12,7 @@ import { UserService } from '../user.service';
 export class InputFormComponent implements OnInit {
   @ViewChild('form') userForm: NgForm;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.resetForm();
@@ -26,10 +27,16 @@ export class InputFormComponent implements OnInit {
     const { value, valid } = this.userForm;
     if (valid) {
       const isNew = this.userService.selectedUser.UserID === 0;
-      const subscription = isNew
-        ? this.userService.createUser(value)
-        : this.userService.updateUser(this.userService.selectedUser.UserID, { ...value, UserID: null });
-
+      var subscription;
+      if (isNew) {
+        subscription = this.userService.createUser(value);
+        this.toastr.success(`${this.userService.selectedUser.Name} is inserted.`,"Insert");
+      }
+      else {
+        subscription = this.userService.updateUser(this.userService.selectedUser.UserID,
+          { ...value, UserID: null });
+          this.toastr.info(`${this.userService.selectedUser.Name} is updated.`,"Update");
+      }
       subscription.subscribe(
         (res) => {
           this.resetForm();

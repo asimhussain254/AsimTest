@@ -20,4 +20,7 @@ export class UserService {
   updateUser(userId: number, user: IUser) {
     return this.httpClient.put(`https://localhost:5001/api/User/${userId}`, user);
   }
+  deleteUser(userId: number){
+    return this.httpClient.delete(`https://localhost:5001/api/User/${userId}`);
+  }
 }
